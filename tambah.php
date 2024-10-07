@@ -4,6 +4,7 @@ session_start();
 if (!isset($_SESSION["login"])) {
   header("Location: login.php");
 }
+
 require 'function.php';
 
 // cek apakah tombol sudah dipencet atau blm

@@ -1,5 +1,6 @@
 <?php 
 require 'function.php';
+  
 
 if (isset($_POST["register"])) {
  
@@ -43,12 +44,12 @@ h6 {
           <h1>HALAMAN REGISTRASI</h1>
           <div class="d-flex flex-column gap-2 mt-2">
               <label for="username" class="text-uppercase fw-bold">USERNAME</label>
-              <input class="form-control form-control-lg"  type="text" name="username"/>
+              <input class="form-control form-control-lg"  type="text" name="username" required/>
               <label for="password" class="text-uppercase fw-bold">PASSWORD</label>
-              <input class="form-control form-control-lg" type="password" name="password"/>
+              <input class="form-control form-control-lg" type="password" name="password" required/>
               <label for="password2" class="text-uppercase fw-bold">KONFIRMASI PASSWORD</label>
-              <input class="form-control form-control-lg" type="password" name="password2"/>
-              <button class="btn btn-outline-primary fw-bold btn-lg mt-2" type="submit" name="register">REGISTER</button> 
+              <input class="form-control form-control-lg" type="password" name="password2" required/>
+              <button class="btn btn-outline-primary fw-bold btn-lg mt-2" type="submit" name="register">REGISTER</button>
               <h6>sudah mempunyai akun? silahkan login <a href="login.php" style="margin-left: 4px;">LOGIN DISINI</a></h6>
           </div>
       </div>

@@ -1,11 +1,31 @@
 <?php 
 session_start();
+require 'function.php';
+
+// cek cookie
+if (isset($_COOKIE['id']) && isset($_COOKIE['key']) ) {
+  $id = $_COOKIE['id'];
+  $key = $_COOKIE['key'];
+
+  // ambil username berdasarkan id
+  $result = mysqli_query($db, "SELECT username FROM akun WHERE 
+        id = $id
+  ");
+  $row = mysqli_fetch_assoc($result);
+
+  // cek cookie dan username
+  if ($key === hash('sha256', $row['username'])) {
+    $_SESSION['login'] = true;
+  }
+
+
+}
 
 if (isset($_SESSION["login"])) {
   header("Location: index.php");
   exit;
 }
-require 'function.php';
+
 
 if (isset($_POST["login"])) {
 
@@ -20,8 +40,16 @@ if (isset($_POST["login"])) {
     if (mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);
         if (password_verify($password, $row["password"])) {
-
           $_SESSION["login"] = true;
+
+          // cek remember me
+          if (isset($_POST["remember"])) {
+            // buat cookie
+            setcookie('id', $row['id'], time()+60);
+            setcookie('key', hash('sha256', $row['username']), time()+60);
+          }
+
+        
           header("Location: index.php");
           exit;
         }
@@ -30,7 +58,7 @@ if (isset($_POST["login"])) {
     $error = true;
 }
 
-?>
+?>    
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,7 +89,8 @@ input {
               <label for="password" class="text-uppercase fw-bold">PASSWORD</label>
               <input class="form-control form-control-lg" type="password" name="password"/>
               <button class="btn btn-outline-primary fw-bold btn-lg mt-2" type="submit" name="login">LOGIN</button>
-              <h6>belum mempunyai akun? silahkan registrasi terlebih dahulu <a href="register.php" style="margin-left: 4px;">REGISTRASI</a></h6>
+              <h6>belum punya akun? remember me? <a href="register.php" style="margin-left: 4px;">REGISTRASI</a></h6>
+              <input  type="checkbox" name="remember" id="remember"/>
           </div>
       </div>
   </div>

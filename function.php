@@ -149,9 +149,14 @@ function register($data) {
     $password = mysqli_real_escape_string($db, $data["password"]);
     $password2 = mysqli_real_escape_string($db, $data["password2"]);
 
+    if (empty(trim($username))) {
+        return false;
+    }
+    
     $result = mysqli_query($db,"SELECT username FROM akun WHERE
     username = '$username' 
     ");
+
 
     if (mysqli_fetch_assoc($result)) {
         echo "<script>
