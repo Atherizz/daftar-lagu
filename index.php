@@ -1,8 +1,15 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+}
 
 require 'function.php';
 $lagu = query("SELECT * FROM lagu ORDER BY id DESC"); 
 $showButton = false;
+
+
 
 if (isset($_POST["cari"]) ) {
     $lagu = cari($_POST["keyword"]);
@@ -50,6 +57,7 @@ if (isset($_POST["show"])) {
 
 <body>
 
+<a href="logout.php" class="btn btn-danger" onclick="return confirm('apakah anda yakin ingin logout?')">Logout</a>
 
 <h1>DAFTAR LAGU</h1>
 

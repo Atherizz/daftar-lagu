@@ -1,8 +1,13 @@
 <?php 
+session_start();
+
+if (!isset($_SESSION["login"])) {
+  header("Location: login.php");
+}
 require 'function.php';
+
 // cek apakah tombol sudah dipencet atau blm
 if (isset($_POST["submit"])) {
-
 
     if(tambah($_POST) > 0) {
         echo "
